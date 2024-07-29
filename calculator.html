@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgb(78, 73, 73);
+        }
+
+        .main {
+            background-color: grey;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        input {
+            height: 50px;
+            width: 100%;
+            padding: 3px 5px;
+            border: none;
+            outline: none;
+            text-align: right;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            background-color: #000000;
+            color: #ffffff;
+            box-shadow: 0px 0px 10px #ffffff;
+        }
+
+        button {
+            width: 70px;
+            height: 70px;
+            margin: 10px;
+            font-size: 1.5rem;
+            border: none;
+            outline: none;
+            border-radius: 50%;
+            box-shadow: -3px -3px 10px #ffffff;
+            text-align: center;
+            line-height: 70px;
+            background-color: #000000;
+            color: #ffffff;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .operator {
+            background-color: #008000;
+        }
+
+        .equal {
+            background-color: #ffa500;
+        }
+
+        .delete {
+            background-color: #ff0000;
+        }
+
+        .point {
+            background-color: #9900ff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="main">
+            <input type="text" id="input" readonly>
+            <div class="line">
+                <button class="delete">AC</button>
+                <button class="operator">%</button>
+                <button class="delete">DEL</button>
+                <button class="operator">/</button>
+            </div>
+            <div class="line">
+                <button>7</button>
+                <button>8</button>
+                <button>9</button>
+                <button class="operator">*</button>
+            </div>
+            <div class="line">
+                <button>4</button>
+                <button>5</button>
+                <button>6</button>
+                <button class="operator">-</button>
+            </div>
+            <div class="line">
+                <button>1</button>
+                <button>2</button>
+                <button>3</button>
+                <button class="operator">+</button>
+            </div>
+            <div class="line">
+                <button>00</button>
+                <button>0</button>
+                <button class="point">.</button>
+                <button class="equal">=</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let input = document.querySelector('#input');
+        let buttons = document.querySelectorAll('button');
+        let string = '';
+
+        let arr = Array.from(buttons);
+
+        arr.forEach((button) => {
+            button.addEventListener('click', (e) => {
+                if (e.target.innerText == '=') {
+                    if(input.value[input.value.length-1]== '%' || input.value[input.value.length-1]== '/' || input.value[input.value.length-1]== '*' || input.value[input.value.length-1]== '-' || input.value[input.value.length-1]== '+' || input.value[input.value.length-1]== '.'){
+                        input.value = string;
+                    }
+                    else{
+                        string = eval(string);
+                        input.value = string;
+                    }
+                }
+                else if (e.target.innerText == 'AC') {
+                    string = '';
+                    input.value = string;
+                }
+                else if (e.target.innerText == 'DEL') {
+                    string = string.substring(0, string.length - 1);
+                    input.value = string;
+                }
+                else {
+                    if (e.target.innerText == '00' || e.target.innerText == '0') {
+                        if (input.value == '' || input.value == '0') {
+                            input.value = '0';
+                        }
+                        else {
+                            string += e.target.innerText;
+                            input.value = string;
+                        }
+                    }
+                    else if(e.target.innerText == '%'){
+                        if(input.value[input.value.length-1]== '%' || input.value == ''){
+                            input.value = string;
+                        }
+                        else if(input.value[input.value.length-1]== '/' || input.value == ''){
+                            string = string.slice(0,string.length-1);
+                            string += '%';
+                            input.value = string;
+                        }
+                        else if(input.value[input.value.length-1]== '*' || input.value == ''){
+                            string = string.slice(0,string.length-1);
+                            string += '%';
+                            input.value = string;
+                        }
+                        else if(input.value[input.value.length-1]== '-' || input.value == ''){
+                            string = string.slice(0,string.length-1);
+                            string += '%';
+                            input.value = string;
+                        }
+                        else if(input.value[input.value.length-1]== '+' || input.value == ''){
+                            string = string.slice(0,string.length-1);
+                            string += '%';
+                            input.value = string;
+                        }
+                        else{
+                            string += e.target.innerText;
+                            input.value = string;
+                        }
+                    }
+                    else if(e.target.innerText == '/'){
+                        if(input.value[input.value.length-1]== '/' || input.value == ''){
+                            input.value = string;
+                        }
+                        else if(input.value[input.value.length-1]== '%' || input.value == ''){
+                            string = string.slice(0,string.length-1);
+                            string += '/';
+                            input.value = string;
+                        }
+                        else if(input.value[input.value.length-1]== '*' || input.value == ''){
+                            string = string.slice(0,string.length-1);
+                            string += '/';
+                            input.value = string;
+                        }
+                        else if(input.value[input.value.length-1]== '-' || input.value == ''){
+                            string = string.slice(0,string.length-1);
+                            string += '/';
+                            input.value = string;
+                        }
+                        else if(input.value[input.value.length-1]== '+' || input.value == ''){
+                            string = string.slice(0,string.length-1);
+                            string += '/';
+                            input.value = string;
+                        }
+                        else{
+                            string += e.target.innerText;
+                            input.value = string;
+                        }
+                    }
+                    else if(e.target.innerText == '*'){
+                        if(input.value[input.value.length-1]== '*' || input.value == ''){
+                            input.value = string;
+                        }
+                        else if(input.value[input.value.length-1]== '/' || input.value == ''){
+                            string = string.slice(0,string.length-1);
+                            string += '*';
+                            input.value = string;
+                        }
+                        else if(input.value[input.value.length-1]== '%' || input.value == ''){
+                            string = string.slice(0,string.length-1);
+                            string += '*';
+                            input.value = string;
+                        }
+                        else if(input.value[input.value.length-1]== '-' || input.value == ''){
+                            string = string.slice(0,string.length-1);
+                            string += '*';
+                            input.value = string;
+                        }
+                        else if(input.value[input.value.length-1]== '+' || input.value == ''){
+                            string = string.slice(0,string.length-1);
+                            string += '*';
+                            input.value = string;
+                        }
+                        else{
+                            string += e.target.innerText;
+                            input.value = string;
+                        }
+                    }
+                    else if(e.target.innerText == '-'){
+                        if(input.value[input.value.length-1]== '-' || input.value == ''){
+                            input.value = string;
+                        }
+                        else if(input.value[input.value.length-1]== '/' || input.value == ''){
+                            string = string.slice(0,string.length-1);
+                            string += '-';
+                            input.value = string;
+                        }
+                        else if(input.value[input.value.length-1]== '*' || input.value == ''){
+                            string = string.slice(0,string.length-1);
+                            string += '-';
+                            input.value = string;
+                        }
+                        else if(input.value[input.value.length-1]== '%' || input.value == ''){
+                            string = string.slice(0,string.length-1);
+                            string += '-';
+                            input.value = string;
+                        }
+                        else if(input.value[input.value.length-1]== '+' || input.value == ''){
+                            string = string.slice(0,string.length-1);
+                            string += '-';
+                            input.value = string;
+                        }
+                        else{
+                            string += e.target.innerText;
+                            input.value = string;
+                        }
+                    }
+                    else if(e.target.innerText == '+'){
+                        if(input.value[input.value.length-1]== '+' || input.value == ''){
+                            input.value = string;
+                        }
+                        else if(input.value[input.value.length-1]== '/' || input.value == ''){
+                            string = string.slice(0,string.length-1);
+                            string += '+';
+                            input.value = string;
+                        }
+                        else if(input.value[input.value.length-1]== '*' || input.value == ''){
+                            string = string.slice(0,string.length-1);
+                            string += '+';
+                            input.value = string;
+                        }
+                        else if(input.value[input.value.length-1]== '-' || input.value == ''){
+                            string = string.slice(0,string.length-1);
+                            string += '+';
+                            input.value = string;
+                        }
+                        else if(input.value[input.value.length-1]== '%' || input.value == ''){
+                            string = string.slice(0,string.length-1);
+                            string += '+';
+                            input.value = string;
+                        }
+                        else{
+                            string += e.target.innerText;
+                            input.value = string;
+                        }
+                    }
+                    else if(e.target.innerText == '.'){
+                        if(input.value[input.value.length-1] == '.'){
+                            input.value = string;
+                        }
+                        else if(input.value.includes('%') || input.value.includes('/') || input.value.includes('*') || input.value.includes('-') || input.value.includes('+')){
+                            string += e.target.innerText;
+                            input.value = string;
+                        }
+                        else if(input.value.includes('.')){
+                            input.value = string;
+                        }
+                       
+                        else{
+                            string += e.target.innerText;
+                            input.value = string;
+                        }
+                    }
+                    else {
+                        string += e.target.innerText;
+                        input.value = string;
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
